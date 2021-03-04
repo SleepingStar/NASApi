@@ -1,4 +1,4 @@
-from .constants import key
+from constants import key
 from datetime import datetime
 import requests
 from io import BytesIO

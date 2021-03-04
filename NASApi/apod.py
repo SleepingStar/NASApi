@@ -1,6 +1,6 @@
 from datetime import datetime
 from io import BytesIO
-from .constants import key
+from constants import key
 import requests
 
 

@@ -1,4 +1,4 @@
-from .constants import key
+from constants import key
 from typing import NamedTuple
 from datetime import datetime
 import requests
