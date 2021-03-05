@@ -32,7 +32,7 @@ from NASApi import APOD
 from PIL import Image
 
 apod = APOD() # Instantiates the class
-pic = Image.open(apod.bytesimage) # Opens the bytes image using PIL
+pic = Image.open(apod.bytes_image) # Opens the bytes image using PIL
 pic.show() # Opens the current image for viewing pleasures 
 ``` 
 
