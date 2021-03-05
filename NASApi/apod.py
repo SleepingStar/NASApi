@@ -54,7 +54,7 @@ class APOD:
             self.media_type = response['media_type']
             self.title = response['title']
             self.url = response['url']
-            self.bytes_url = BytesIO(requests.get(self.url).content) if self.media_type != "video" else None
+            self.bytes_image = BytesIO(requests.get(self.url).content) if self.media_type != "video" else None
             self.thumbnail_url = response.get('thumbnail_url', None)
             self.bytes_thumbnail = BytesIO(requests.get(self.thumbnail_url).content) if self.media_type == "video" else None
 
