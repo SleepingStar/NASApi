@@ -7,13 +7,13 @@ from io import BytesIO
 class Earth:
     def __init__(self, inlat: float, inlon: float, indate: str = str(datetime.now().date()), indim: float = .025):
         """
+        This endpoint retrieves the date-times and asset names for closest available imagery for a supplied location and date.
+
 
         :param inlat: Latitude
         :param inlon: Longitude
         :param indate: beginning of 30 day date range that will be used to look for closest image to that date
         :param indim: width and height of image in degrees
-
-        This endpoint retrieves the date-times and asset names for closest available imagery for a supplied location and date.
         """
         indate = str(datetime.strptime(indate, "%Y-%m-%d").date())
         payload = {'api_key': key, 'lat': inlat, 'lon': inlon, "date": indate, "dim": indim}

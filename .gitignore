@@ -5,3 +5,4 @@
 /setup.py
 /dist
 /NASApi.egg-info
+/tests/

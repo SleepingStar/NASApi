@@ -7,9 +7,9 @@ import requests
 class Insight:
     def __init__(self):
         """
-
         Provides per-Sol summary data for each of the last seven available Sols
         NASA's documentation https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf
+
         """
         payload = {'api_key': key, 'feedtype': "json", 'ver': "1.0"}
         response = requests.get(f'https://api.nasa.gov/insight_weather/?', params=payload)

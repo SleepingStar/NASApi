@@ -11,11 +11,11 @@ gada = ""
 class EPIC:
     def __init__(self, eon: str = "natural", ada: str = ""):
         """
-        :param eon: enhanced or natural
-        :param ada: all, date, or available
-
         Provides information on the daily imagery collected by DSCOVR's Earth Polychromatic Imaging Camera
         NASA's documentation: https://epic.gsfc.nasa.gov/about/api
+
+        :param eon: enhanced or natural
+        :param ada: all, date, or available
         """
         global geon
         global gada
