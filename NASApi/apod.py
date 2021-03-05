@@ -6,13 +6,13 @@ import requests
 
 
 class APOD:
-    def __init__(self, indate=str(datetime.now().date()), start_date: str = None, end_date: str = None,
+    def __init__(self, date=str(datetime.now().date()), start_date: str = None, end_date: str = None,
                  count: int = None, thumbs: bool = True):
         """
         Gives the astronomy image of the day for the date passed in
         NASA's github https://github.com/nasa/apod-api
 
-        :param indate: The date of the APOD image to retrieve (Date must be between June 16, 1995 and the current date)
+        :param date: The date of the APOD image to retrieve (Date must be between June 16, 1995 and the current date)
         :param start_date The start of a date range, when requesting date for a range of dates. Cannot be used with date
         :param end_date	The end of the date range, when used with start_date.
         :param count If this is specified then count randomly chosen images will be returned (Cannot be used with date or start_date and end_date)
@@ -33,7 +33,7 @@ class APOD:
             else:
                 raise ValueError("Count cannot exceed 100 and must be positive (0 < count <= 100)")
         else:
-            indate = datetime.strptime(indate, "%Y-%m-%d").date()
+            indate = datetime.strptime(date, "%Y-%m-%d").date()
             if not datetime.now().date() >= indate >= datetime(1995, 6, 16).date():
                 raise ValueError("Date must be between June 16, 1995 and the current date.")
             payload = {'api_key': key, 'date': str(indate), 'thumbs': thumbs}
