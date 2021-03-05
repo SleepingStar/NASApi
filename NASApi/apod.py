@@ -10,7 +10,7 @@ class APOD:
                  count: int = None, thumbs: bool = True):
         """
         Gives the astronomy image of the day for the date passed in
-        NASA's github https://github.com/nasa/apod-api
+        APOD API: https://api.nasa.gov/#apod
 
         :param date: The date of the APOD image to retrieve (Date must be between June 16, 1995 and the current date)
         :param start_date The start of a date range, when requesting date for a range of dates. Cannot be used with date
