@@ -1,7 +1,7 @@
+from collections import namedtuple
 from datetime import datetime
 from io import BytesIO
 from constants import key
-from typing import NamedTuple
 import requests
 
 geon = "natural"
@@ -12,7 +12,7 @@ class EPIC:
     def __init__(self, eon: str = "natural", ada: str = ""):
         """
         Provides information on the daily imagery collected by DSCOVR's Earth Polychromatic Imaging Camera
-        NASA's documentation: https://epic.gsfc.nasa.gov/about/api
+        EPIC API: https://api.nasa.gov/#epic
 
         :param eon: enhanced or natural
         :param ada: all, date, or available
@@ -49,11 +49,11 @@ class EPIC:
                 self.captions.append(r['caption'])
                 self.images.append(r['image'])
                 self.versions.append(r['version'])
-                self.centroidcords.append(CentroidCoords._make(r['centroid_coordinates'].values()))
-                self.dscovrpos.append(DscovrPos._make(r['dscovr_j2000_position'].values()))
-                self.lunarpos.append(LunarPos._make(r['lunar_j2000_position'].values()))
-                self.sunpos.append(SunPos._make(r['sun_j2000_position'].values()))
-                self.attquarts.append(AttitudeQuaternions._make(r['attitude_quaternions'].values()))
+                self.centroidcords.append(namedtuple("CentroidCoords", r['centroid_coordinates'].keys())(*r['centroid_coordinates'].values()))
+                self.dscovrpos.append(namedtuple("DscovrPos", r['dscovr_j2000_position'].keys())(*r['dscovr_j2000_position'].values()))
+                self.lunarpos.append(namedtuple("LunarPos", r['lunar_j2000_position'].keys())(*r['lunar_j2000_position'].values()))
+                self.sunpos.append(namedtuple("SunPos", r['sun_j2000_position'].keys())(*r['sun_j2000_position'].values()))
+                self.attquarts.append(namedtuple("AttitudeQuaternions", r['attitude_quaternions'].keys())(*r['attitude_quaternions'].values()))
                 self.dates.append(r['date'])
 
     def __str__(self):
@@ -71,33 +71,3 @@ class EPIC:
         image = requests.get(f"https://api.nasa.gov/EPIC/archive/{geon}/{date[:10].replace('-', '/')}/png/{image}"
                              f".png?api_key={key}")
         return BytesIO(image.content)
-
-
-class CentroidCoords(NamedTuple):
-    latitude: float
-    longitude: float
-
-
-class DscovrPos(NamedTuple):
-    x: float
-    y: float
-    z: float
-
-
-class LunarPos(NamedTuple):
-    x: float
-    y: float
-    z: float
-
-
-class SunPos(NamedTuple):
-    x: float
-    y: float
-    z: float
-
-
-class AttitudeQuaternions(NamedTuple):
-    q0: float
-    q1: float
-    q2: float
-    q3: float

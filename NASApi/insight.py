@@ -1,3 +1,4 @@
+from collections import namedtuple
 from constants import key
 from typing import NamedTuple
 from datetime import datetime
@@ -8,7 +9,7 @@ class Insight:
     def __init__(self):
         """
         Provides per-Sol summary data for each of the last seven available Sols
-        NASA's documentation https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf
+        Insight API: https://api.nasa.gov/#insight
 
         """
         payload = {'api_key': key, 'feedtype': "json", 'ver': "1.0"}
@@ -17,36 +18,24 @@ class Insight:
         self.remaining = response.headers['X-RateLimit-Remaining']
         response = response.json()
         self.solkeys = response['sol_keys']
-        self.atmotemp, self.horzonws, self.atmopres, self.utcs, self.seasons = [], [], [], [], []
+        self.atmopres, self.utcs, self.seasons, self.month_ordinal = [], [], [], []
         for solk in self.solkeys:
-            self.atmotemp.append(AtmoTemp._make(response[solk]['AT'].values()))
-            self.horzonws.append(HorzonWS._make(response[solk]['HWS'].values()))
-            self.atmopres.append(AtmoPres._make(response[solk]['PRE'].values()))
-            self.utcs.append(FirstLastUTC._make([response[solk]['First_UTC'], response[solk]['Last_UTC']]))
-            self.seasons.append(response[solk]['Season'])
+            seasons = {
+                "northern": response[solk]['Northern_season'],
+                "season": response[solk]['Season'],
+                "southern": response[solk]["Southern_season"]
+            }
+            utcs = {
+                "first": response[solk]['First_UTC'],
+                "last": response[solk]['Last_UTC']
+            }
+            self.atmopres.append(namedtuple("AtmoPressure", response[solk]['PRE'].keys())(*response[solk]['PRE'].values()))
+            self.utcs.append(namedtuple("UTCS", utcs.keys())(*utcs.values()))
+            self.seasons.append(namedtuple("Seasons", seasons.keys())(*seasons.values()))
+            self.month_ordinal.append(response[solk]['Month_ordinal'])
 
 
-class AtmoTemp(NamedTuple):
-    average: float
-    count: int
-    minimum: float
-    maximum: float
-
-
-class HorzonWS(NamedTuple):
-    average: float
-    count: int
-    minimum: float
-    maximum: float
-
-
-class AtmoPres(NamedTuple):
-    average: float
-    count: int
-    minimum: float
-    maximum: float
-
-
-class FirstLastUTC(NamedTuple):
+class UTCS(NamedTuple):
     first: datetime
     last: datetime
+

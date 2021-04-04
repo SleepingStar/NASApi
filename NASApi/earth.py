@@ -7,8 +7,8 @@ from io import BytesIO
 class Earth:
     def __init__(self, inlat: float, inlon: float, indate: str = str(datetime.now().date()), indim: float = .025):
         """
-        This endpoint retrieves the date-times and asset names for closest available imagery for a supplied location and date.
-
+        Retrieves the date-times and asset names for closest available imagery for a supplied location and date.
+        Earth API: https://api.nasa.gov/#earth
 
         :param inlat: Latitude
         :param inlon: Longitude
